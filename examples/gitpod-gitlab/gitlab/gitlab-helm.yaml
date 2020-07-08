@@ -1,0 +1,19 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gitlab
+  namespace: kube-system
+spec:
+  chart: gitlab
+  version: 4.0.4
+  repo: https://charts.gitlab.io/
+  targetNamespace: default
+  valuesContent: |-
+    global:
+      hosts:
+        domain: {{ DOMAIN }}
+      ingress:
+        configureCertmanager: false
+        tls:
+          secretName: tls-cert
+    certmanager.install: false

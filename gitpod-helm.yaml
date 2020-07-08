@@ -1,0 +1,26 @@
+# This isn't used at the moment since helm timeouts with the default timeout value
+# and it is not possible to set another timeout value here.
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gitpod
+  namespace: kube-system
+spec:
+  chart: gitpod
+  version: 0.4.0
+  repo: https://charts.gitpod.io/
+  targetNamespace: default
+  valuesContent: |-
+    certificatesSecret:
+      secretName: proxy-config-certificates
+
+    components:
+      wsManagerNode:
+        containerdSocket: /run/k3s/containerd/containerd.sock
+      workspace:
+        template:
+          spec:
+            dnsConfig: null
+            dnsPolicy: ClusterFirst
+
+    installPodSecurityPolicies: true

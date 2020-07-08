@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gitpod-helm-installer
+spec:
+    containers:
+      - name: gitpod-helm-installer
+        image: alpine/helm:3.2.4
+        volumeMounts:
+          - name: kubeconfig
+            mountPath: /root/.kube/config
+          - name: installfiles
+            mountPath: /root/install
+        command: ["sh", "/root/install/command.sh"]
+    volumes:
+      - name: kubeconfig
+        hostPath:
+          path: /etc/rancher/k3s/k3s_.yaml
+      - name: installfiles
+        configMap:
+          name: gitpod-helm-installer
+    restartPolicy: OnFailure
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitpod-helm-installer
+data:
+  command.sh: |-
+    #!/bin/sh
+    set -eux
+    helm repo add gitpod https://charts.gitpod.io
+    helm repo update
+    helm install gitpod gitpod/gitpod --timeout 60m --version 0.4.0 --values /root/install/values.yaml
+  values.yaml: |-
+    certificatesSecret:
+      secretName: proxy-config-certificates
+
+    components:
+      wsManagerNode:
+        containerdSocket: /run/k3s/containerd/containerd.sock
+      workspace:
+        template:
+          spec:
+            dnsConfig: null
+            dnsPolicy: ClusterFirst
+
+    installPodSecurityPolicies: true
