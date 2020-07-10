@@ -1,0 +1,15 @@
+hostname: gitpod.{{ DOMAIN }}
+
+certificatesSecret:
+  secretName: proxy-config-certificates
+
+components:
+  wsManagerNode:
+    containerdSocket: /run/k3s/containerd/containerd.sock
+  workspace:
+    template:
+      spec:
+        dnsConfig: null
+        dnsPolicy: ClusterFirst
+
+installPodSecurityPolicies: true

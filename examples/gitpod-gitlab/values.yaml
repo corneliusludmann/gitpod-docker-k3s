@@ -1,5 +1,3 @@
-hostname: gitpod.{{ DOMAIN }}
-
 authProviders:
 - id: "Local GitLab"
   host: "gitlab.{{ DOMAIN }}"

@@ -8,10 +8,13 @@ services:
       - ./proxy/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 443:443
+    depends_on:
+      - gitpod
+      - gitlab
 
   gitpod:
     image: ludmann/gitpod-k3s
-    # build: ../..
+    build: ../..
     privileged: true
     tmpfs:
       - /run

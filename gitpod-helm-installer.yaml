@@ -35,16 +35,4 @@ data:
     helm repo update
     helm install gitpod gitpod/gitpod --timeout 60m --version 0.4.0 --values /root/install/values.yaml
   values.yaml: |-
-    certificatesSecret:
-      secretName: proxy-config-certificates
-
-    components:
-      wsManagerNode:
-        containerdSocket: /run/k3s/containerd/containerd.sock
-      workspace:
-        template:
-          spec:
-            dnsConfig: null
-            dnsPolicy: ClusterFirst
-
-    installPodSecurityPolicies: true
+    # values.yaml

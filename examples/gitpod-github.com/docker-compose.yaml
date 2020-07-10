@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+  gitpod:
+    image: ludmann/gitpod-k3s
+    build: ../..
+    privileged: true
+    tmpfs:
+      - /run
+      - /var/run
+      - /var/gitpod/workspaces
+    volumes:
+      - ./values.yaml:/values.yaml
+      - ../certs:/certs
+    ports:
+      - 443:443
+    environment:
+      - DOMAIN=${DOMAIN}
+      - DNSSERVER=${DNSSERVER}

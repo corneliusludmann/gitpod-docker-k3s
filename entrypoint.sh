@@ -14,10 +14,10 @@ if [ -f /var/lib/rancher/k3s/server/manifests/gitpod-helm-installer.yaml ]; then
     fi
 
     if [ -f /values.yaml ]; then
-        sed 's/^/    /' /values.yaml >> /var/lib/rancher/k3s/server/manifests/gitpod-helm-installer.yaml
-    else
-        echo "    hostname: gitpod.{{ DOMAIN }}" >> /var/lib/rancher/k3s/server/manifests/gitpod-helm-installer.yaml
+        # merge values and update default_values.yaml
+        yq m -ixa /default_values.yaml /values.yaml
     fi
+    sed 's/^/    /' /default_values.yaml >> /var/lib/rancher/k3s/server/manifests/gitpod-helm-installer.yaml
 
     sed -i "s/{{ DOMAIN }}/$DOMAIN/g" /var/lib/rancher/k3s/server/manifests/gitpod-helm-installer.yaml
 
