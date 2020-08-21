@@ -1,0 +1,10 @@
+authProviders:
+- id: "GitHub.com"
+  host: "github.com"
+  protocol: "https"
+  type: "GitHub"
+  oauth:
+    clientId: "167979993360c14d0241"
+    clientSecret: "dc27eaf17c332ba23ba44e4056d45bc28850f1df"
+    callBackUrl: "https://gitpod.dev.ludmann.org/auth/github/callback"
+    settingsUrl: "https://github.com/settings/connections/applications/167979993360c14d0241"

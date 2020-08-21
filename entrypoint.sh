@@ -22,12 +22,12 @@ if [ -f /var/lib/rancher/k3s/server/manifests/gitpod-helm-installer.yaml ]; then
     sed -i "s/{{ DOMAIN }}/$DOMAIN/g" /var/lib/rancher/k3s/server/manifests/gitpod-helm-installer.yaml
 
     # gitpod-helm-installer.yaml needs access to kubernetes by the public host IP.
-    kubeconfig_replacip() {
+    kubeconfig_replaceip() {
         while [ ! -f /etc/rancher/k3s/k3s.yaml ]; do sleep 1; done
         HOSTIP=$(hostname -i)
         sed "s+127.0.0.1+$HOSTIP+g" /etc/rancher/k3s/k3s.yaml > /etc/rancher/k3s/k3s_.yaml
     }
-    kubeconfig_replacip &
+    kubeconfig_replaceip &
 
     installation_completed_hook() {
         while [ -z "$(kubectl get pods | grep gitpod-helm-installer | grep Completed)" ]; do sleep 10; done
