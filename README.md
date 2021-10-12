@@ -17,7 +17,7 @@ $ docker run \
     -v $(pwd)/certs:/certs \
     -e DOMAIN=your.domain.com \
     -e DNSSERVER=10.0.0.1 \
-    --privileged true \
+    --privileged=true \
     ludmann/gitpod-k3s
 ```
 
